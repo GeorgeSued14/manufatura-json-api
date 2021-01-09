@@ -39,21 +39,23 @@ services:
       - challenge
     command: "yarn dev"
 
+  db:
+    container_name: db
+    image: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pg_data:/var/lib/postgres/data
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    env_file: .env.development
+
 networks:
   challenge:
     name: challenge
     driver: bridge
 
-  # product-db:
-  #   container_name: product-pg
-  #   image: postgres
-  #   env_file: .env
-  #   networks:
-  #     - fullstack-challenge
-
-  # user-db:
-  #   container_name: user-pg
-  #   image: postgres
-  #   env_file: .env
-  #   networks:
-  #     - fullstack-challenge
+volumes:
+  pg_data:
+    driver: local

@@ -14,10 +14,10 @@ app.use(logger("dev"));
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
 
-const PORT = process.env.PORT || 3034;
-const HOST = process.env.HOST || "http://127.0.0.1";
+const PORT: number = parseInt(`${process.env.PORT}`) || 3034;
+const HOST: String = process.env.HOST || "http://127.0.0.1";
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
   res.json("Hello World product");
 });
 
