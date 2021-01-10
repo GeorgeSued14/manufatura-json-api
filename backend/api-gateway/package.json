@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "dev": "NODE_ENV=development ts-node-dev src/index.ts",
-    "start": "NODE_ENV=production yarn build && node build/index.js"
+    "dev": "NODE_ENV=development ts-node-dev src/server.ts",
+    "start": "NODE_ENV=production yarn build && node build/server.js"
   },
   "devDependencies": {
     "@types/dotenv-safe": "^8.1.1",

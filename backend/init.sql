@@ -1,4 +1,3 @@
-CREATE USER ddrtech;
 CREATE DATABASE users;
 CREATE DATABASE products;
 

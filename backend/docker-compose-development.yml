@@ -8,6 +8,7 @@ services:
     ports:
       - "3030:3030"
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./api-gateway:/usr/app
     networks:
       - challenge
@@ -18,10 +19,12 @@ services:
     restart: always
     build: ./products-api/
     ports:
-      - "3034:3034"
+      - "3036:3036"
     env_file: ./products-api/.env
     volumes:
       - ./products-api:/usr/app
+    depends_on:
+      - db
     networks:
       - challenge
     command: "yarn dev"
@@ -50,11 +53,17 @@ services:
     ports:
       - "5432:5432"
     env_file: .env.development
+    networks:
+      challenge:
+        ipv4_address: 10.5.0.5
 
 networks:
   challenge:
     name: challenge
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
 
 volumes:
   pg_data:

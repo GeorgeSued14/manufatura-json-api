@@ -1,5 +1,4 @@
-import { Express, Request, Response } from "express";
-import * as express from "express";
+import { Express, Request, Response, NextFunction } from "express";
 import httpProxy from "express-http-proxy";
 
 const API_USER: String = process.env.API_USER || "http://localhost:3030/users";
@@ -28,12 +27,13 @@ const userServiceProxy = httpProxy(`${API_USER}`, {
 });
 
 const productServiceProxy = httpProxy(`${API_PRODUCT}`);
+
 export function initRoutes(app: Express) {
   app.use("/users", (req: Request, res: Response, next: NextFunction) => {
     userServiceProxy(req, res, next);
   });
 
-  app.use("/products", (req: Request, res: Response, next: NextFunction) => {
+  app.use("/products/", (req: Request, res: Response, next: NextFunction) => {
     productServiceProxy(req, res, next);
   });
 }

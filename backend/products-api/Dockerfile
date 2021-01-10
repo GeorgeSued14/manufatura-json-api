@@ -1,6 +1,6 @@
-FROM node:14-alpine3.12
+FROM node:14-slim
 
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
 COPY ["package*.json", "yarn.lock", "./"]
 
@@ -8,4 +8,6 @@ RUN yarn
 
 COPY . .
 
-EXPOSE 3034
+EXPOSE 3032
+
+
