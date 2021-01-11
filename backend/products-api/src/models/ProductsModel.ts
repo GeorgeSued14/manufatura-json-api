@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-export interface iProduct {
+export interface ProductInterface {
   id: number;
   title: String;
   type: String;
@@ -21,7 +21,7 @@ export interface iProduct {
 }
 
 @Entity("products")
-export class Product implements iProduct {
+export class Product implements ProductInterface {
   @PrimaryGeneratedColumn("increment")
   id: number;
 

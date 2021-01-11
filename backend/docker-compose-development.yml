@@ -20,7 +20,7 @@ services:
     build: ./products-api/
     ports:
       - "3036:3036"
-    env_file: ./products-api/.env
+    env_file: ./products-api/.env.development
     volumes:
       - ./products-api:/usr/app
     depends_on:
@@ -35,9 +35,11 @@ services:
     restart: always
     ports:
       - "3032:3032"
-    env_file: ./users-api/.env
+    env_file: ./users-api/.env.development
     volumes:
       - ./users-api:/usr/app
+    depends_on:
+      - db
     networks:
       - challenge
     command: "yarn dev"

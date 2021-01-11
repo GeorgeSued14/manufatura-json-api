@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { Product } from "../models/Products";
+import { Product } from "../models/ProductsModel";
 import { getManager, getRepository } from "typeorm";
 
 export const getAllProducts = async (req: Request, res: Response) => {
