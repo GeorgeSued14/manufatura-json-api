@@ -1,0 +1,72 @@
+version: "3.5"
+
+services:
+  gateway:
+    container_name: gateway
+    restart: always
+    build: ./api-gateway/
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./api-gateway:/usr/app
+    networks:
+      - challenge
+    command: "yarn dev"
+
+  products:
+    container_name: products
+    restart: always
+    build: ./products-api/
+    ports:
+      - "3036:3036"
+    env_file: ./products-api/.env.development
+    volumes:
+      - ./products-api:/usr/app
+    depends_on:
+      - db
+    networks:
+      - challenge
+    command: "yarn dev"
+
+  users:
+    container_name: users
+    build: ./users-api/
+    restart: always
+    ports:
+      - "3032:3032"
+    env_file: ./users-api/.env.development
+    volumes:
+      - ./users-api:/usr/app
+    depends_on:
+      - db
+    networks:
+      - challenge
+    command: "yarn dev"
+
+  db:
+    container_name: db
+    image: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pg_data:/var/lib/postgres/data
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    env_file: .env.development
+    networks:
+      challenge:
+        ipv4_address: 10.5.0.5
+
+networks:
+  challenge:
+    name: challenge
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+
+volumes:
+  pg_data:
+    driver: local

@@ -1,0 +1,15 @@
+{
+    "type": "postgres",
+    "host": "10.5.0.5",
+    "port": 5432,
+    "username": "ddrtech",
+    "password": "ddrtech1234",
+    "database": "users",
+    "logging": true,
+    "entities": ["./src/models/*.ts"],
+    "migrations": ["./src/db/migration/*.ts"],
+    "cli": {
+        "migrationsDir": "./src/db/migration"
+    }
+}
+
