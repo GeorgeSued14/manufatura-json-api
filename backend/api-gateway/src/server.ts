@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from "express";
 import logger from "morgan";
 import helmet from "helmet";
 import dotenv from "dotenv-safe";
+import cors from "cors";
 
 const app = express();
 
@@ -13,6 +14,7 @@ dotenv.config({
   path: process.env.NODE_ENV === "development" ? ".env.development" : ".env",
 });
 
+app.use(cors());
 app.use(express.json());
 app.use(logger("dev"));
 app.use(helmet());
