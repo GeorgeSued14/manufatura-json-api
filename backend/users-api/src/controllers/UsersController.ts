@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import { User } from "../models/UsersModel";
 import { getManager } from "typeorm";
 import bcrypt from "bcryptjs";
@@ -72,3 +72,8 @@ export const login = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const logout = async (req: Request, res: Response) => {
+  res.json({ auth: false, token: null });
+};
+

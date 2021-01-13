@@ -1,7 +1,10 @@
 import { createConnection } from "typeorm";
 
 createConnection()
-  .then((connection) => {
+  .then(async (connection) => {
+    if (await connection.showMigrations()) {
+      connection.runMigrations();
+    }
     console.log(
       "Connection Database Products has been established successfully"
     );

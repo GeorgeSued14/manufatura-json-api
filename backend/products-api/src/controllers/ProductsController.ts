@@ -13,8 +13,8 @@ export const getAllProducts = async (req: Request, res: Response) => {
 export const storageProduct = async (req: Request, res: Response) => {
   let product = new Product();
   product = { ...req.body };
-
   console.log(product);
+  console.log("meu json", JSON.stringify(product));
 
   const productRepository = getManager().getRepository(Product);
   product = await productRepository.create(product);
