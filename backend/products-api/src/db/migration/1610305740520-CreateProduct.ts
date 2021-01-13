@@ -47,7 +47,7 @@ export default class CreateProduct1610242616559 implements MigrationInterface {
           },
           {
             name: "price",
-            type: "real",
+            type: "double precision",
             isNullable: false,
           },
           {

@@ -1,3 +1,16 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+
+nav a  {
+  margin: 0px 10px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+nav a:hover  {
+  text-decoration: none;
+  color: bisque;
+  cursor: pointer;
+}

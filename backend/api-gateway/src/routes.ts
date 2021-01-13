@@ -6,7 +6,7 @@ const API_PRODUCT: String =
   process.env.API_PRODUCT || "http://localhost:3030/products";
 
 const userServiceProxy = httpProxy(`${API_USER}`, {
-  proxyErrorHandler: function (err, res, next) {
+  proxyErrorHandler: function (err, res: Response, next: NextFunction) {
     console.log(err);
     switch (err && err.code) {
       case "ECONNRESET": {
@@ -26,14 +26,37 @@ const userServiceProxy = httpProxy(`${API_USER}`, {
   },
 });
 
-const productServiceProxy = httpProxy(`${API_PRODUCT}`);
+const productServiceProxy = httpProxy(`${API_PRODUCT}`, {
+  proxyErrorHandler: function (err, res: Response, next: NextFunction) {
+    console.log(err);
+    switch (err && err.code) {
+      case "ECONNRESET": {
+        return res.status(504).json("Tempo expirado");
+      }
+      case "ENOTFOUND": {
+        return res
+          .status(400)
+          .json(
+            "Houve um erro ao tentar acessar o servidor, entre em contato com o administrador"
+          );
+      }
+      default: {
+        next(err);
+      }
+    }
+  },
+});
 
 export function initRoutes(app: Express) {
   app.use("/users", (req: Request, res: Response, next: NextFunction) => {
     userServiceProxy(req, res, next);
   });
 
-  app.use("/products/", (req: Request, res: Response, next: NextFunction) => {
+  app.use("/products", (req: Request, res: Response, next: NextFunction) => {
     productServiceProxy(req, res, next);
+  });
+
+  app.get("/", (req: Request, res: Response) => {
+    res.json("REST WebAPI Challenge 20200630 Running").status(200);
   });
 }
