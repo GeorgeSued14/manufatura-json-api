@@ -1,0 +1,60 @@
+version: "3.5"
+
+services:
+  api:
+    container_name: api
+    build: ./api/
+    restart: always
+    ports:
+      - "3030:3030"
+    env_file: ./api/.env
+    volumes:
+      - ./api:/usr/app
+    depends_on:
+      - db
+    networks:
+      - challenge
+    entrypoint: /bin/bash
+    command: ["yarn.bash"]
+
+  products:
+    container_name: products
+    restart: always
+    build: ./services/products
+    ports:
+      - "3032:3032"
+    env_file: ./services/products/.env
+    volumes:
+      - ./services/products:/usr/app
+    depends_on:
+      - db
+    networks:
+      - challenge
+    entrypoint: /bin/bash
+    command: ["yarn.bash"]
+
+  db:
+    container_name: db
+    image: postgres
+    volumes:
+      - ./databases/pg_data/:/var/lib/postgres/data
+      - ./databases/init.sql:/docker-entrypoint-initdb.d/init.sql
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    env_file: ./databases/.env
+    networks:
+      challenge:
+        ipv4_address: 10.5.0.5
+
+networks:
+  challenge:
+    name: challenge
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+
+volumes:
+  pg_data:

@@ -5,7 +5,6 @@ Este repositório foi criado para um desafio fullstack com o seguinte caso de us
 <br>
 
 <h2> How to Install</h2>
-<hr/>
 <br>
 
 No terminal, clone o projeto:
@@ -22,7 +21,6 @@ Entre na pasta
 
 <br>
 <h2> Setup backend </h2>
-<hr/>
 <br>
 
 Dependências necessárias:
@@ -46,14 +44,19 @@ Em seguida
 ` docker-compose up --file docker-compose.development.yml up`
 
 <br>
-<h2> Setup Frontend </h2>
-<hr/>
-<br>
 
-Dependências necessárias:
+# Setup Frontend
 
+## Dependências:
+
+- npm ou yarn
 - node (nvm) - https://tecadmin.net/install-nodejs-with-nvm/
-- angular #https://angular.io/guide/setup-local
+- angular https://angular.io/guide/setup-local
+
+- docker - https://docs.docker.com/engine/install/
+- docker-compose - https://docs.docker.com/compose/install/
+
+## Development server
 
 Entre na pasta:
 
@@ -63,6 +66,20 @@ Por precaução execute:
 
 `npm install`
 
-Em seguida:
+Em seguida rode:
 
-`ng server --open`
+`ng serve --open`
+
+## Production
+
+Entre na pasta:
+
+`cd /frontend`
+
+Para fazer o build da imagem
+
+`docker-compose build`
+
+Em seguida
+
+`docker-compose up`
