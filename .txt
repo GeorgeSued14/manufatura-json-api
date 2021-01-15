@@ -1,0 +1,35 @@
+TAREFAS PRA ENTREGA FINAL
+
+BACKEND 10h ~9,5 
+[x] - Refatorar a api proxy (2 POMOS / usei 8 POMO)
+[] - Criar a estrategia pra api gateway receber os dados da api de usuários. (1 POMOS)
+[] - Implementar a autenticação JWT no Backend (2 POMOS)
+[] - Implementar nivel de usuário (2 POMOS)
+[] - Criar paginação no Backend (2 POMOS)
+[] - Criar função search() por  title e type (1 POMOS)
+[] - Retornar o usuário que cadastrou o produto (2 POMOS)
+[] - Permitir multiplos uploads (3 POMOS)
+[] - Escrever Unit Test para o endpoint POST /products (2 POMOS)
+[] - Refatorar a API (SOLID/DRY) (3 POMOS)
+[] - Criar uma função de Seed e um Backup dos dados (2 POMOS)
+[] - inserir eslintrc (1 POMOS)
+
+FRONTEND 10h ~8,5
+[] - Desenhar o fluxo do frontend (1 POMOS)
+[] - Criar interface Login no angular (2 POMOS)
+[] - Criar interface Register no angular (2 POMOS)
+[] - Criar service user (3 POMOS)
+[] - Criar mensagens pro usuário (3 POMOS)
+[] - Ajustar a tela de editar os produtos (4 POMOS)
+[] - Ajustar a tabela do dashboard (3 POMOS)
+[] - Estilizar o Frontend (2 POMOS)
+
+DEVOPS 5h ~4,5
+[] - Colocar um servidor Nginx na frente do Node (3 POMOS)
+[] - Verificar a persistencia de dados nos DB (3 POMOS)
+[] - Deploy no heroku (4 POMOS)
+
+DOCS 5h ~3,3
+[] - Corrigir README (2 POMO)
+[] - Escrever a documentação da API (4 POMO)
+[] - Escrever minha estratégia de segurança (2 POMO)
