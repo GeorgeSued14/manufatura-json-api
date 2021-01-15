@@ -37,13 +37,13 @@ services:
     container_name: db
     image: postgres
     volumes:
-      - ./database/pg_data:/var/lib/postgres/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./databases/pg_data/:/var/lib/postgres/data
+      - ./databases/init.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
       - 5432
     ports:
       - "5432:5432"
-    env_file: ./database/.env
+    env_file: ./databases/.env
     networks:
       challenge:
         ipv4_address: 10.5.0.5
