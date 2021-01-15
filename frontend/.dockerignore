@@ -1,0 +1,11 @@
+/node_modules
+/e2e
+
+package-lock.json
+
+.git
+.editorconfig
+.gitignore
+
+*.zip
+*.md
