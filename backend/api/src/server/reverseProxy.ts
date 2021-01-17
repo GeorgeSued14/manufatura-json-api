@@ -3,6 +3,8 @@ import { Request, Response, Express } from "express";
 import dotenvsafe from "dotenv-safe";
 import { ErrnoException, handlerError } from "../config/handleError";
 
+import { checkJwt } from "../middlewares/checkJwt";
+
 dotenvsafe.config({ allowEmptyValues: true });
 
 const API_PRODUCTS = process.env.API_PRODUCTS;
@@ -10,7 +12,7 @@ const API_PRODUCTS = process.env.API_PRODUCTS;
 const proxy = httpProxy.createProxyServer({});
 
 export function initProxy(app: Express) {
-  app.use("/products/", (req: Request, res: Response) => {
+  app.use("/products/", checkJwt, (req: Request, res: Response) => {
     console.log("Redirect products");
     proxy.web(
       req,

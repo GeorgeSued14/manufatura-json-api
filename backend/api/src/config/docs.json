@@ -1,0 +1,23 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "fullstack-challenge-ddrtech",
+      "version": "1.0.0",
+      "description":
+        "Está API se conecta a uma service API que recebe upload de dados JSON.",
+      "license": {
+        "name": "MIT",
+        "url": "https://localhost:3030"
+      },
+      "contact": {
+        "name": "George Sued",
+        "email": "suedgcosta@gmail.com"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3030/"
+      }
+    ],
+  "apis": []
+}
