@@ -6,12 +6,19 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
+import bcrypt from "bcryptjs";
+
+import dotenv from "dotenv";
+dotenv.config();
+
+const SALT_ROUND = Number(process.env.BCRYPT_SALT_ROUND);
+
 export interface UserInterface {
   id: number;
-  name: String;
-  email: String;
-  phone_number: String;
-  password: String;
+  name: string;
+  email: string;
+  phone_number: string;
+  password: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -22,20 +29,31 @@ export class User implements UserInterface {
   id: number;
 
   @Column()
-  name: String;
+  name: string;
 
   @Column()
   email: string;
 
   @Column()
-  phone_number: String;
+  phone_number: string;
 
   @Column()
-  password: String;
+  password: string;
+
+  @Column()
+  role: string;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  hashPassword() {
+    return bcrypt.hashSync(this.password, SALT_ROUND);
+  }
+
+  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
 }

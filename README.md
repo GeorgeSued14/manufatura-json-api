@@ -1,10 +1,9 @@
 # fullstack-challenge-ddrtech
 
-Este repositório foi criado para um desafio fullstack com o seguinte caso de uso: Criar uma api capaz de receber e servir arquivos JSON gerados pelo sistema de manufatura de uma empresa. Além de criar uma interface capaz de fazer upload e validar esses arquivos e um Dashboard que se encarrega de consumir os dados da api e apresentá-los ao cliente.
-
+Interface Web e API criadas para fazer upload de dados JSON gerados por um sistema de manufatura e exibi-los em um dashboard.
 <br>
 
-<h2> How to Install</h2>
+<h2> How to Install </h2>
 <br>
 
 No terminal, clone o projeto:
@@ -15,15 +14,9 @@ Entre na pasta
 
 `cd /fullstack-challenge-ddrtech`
 
-<br/>
+## Setup backend
 
-<b> As instruções abaixo executam o ambiente que ainda está em desenvolvimento, não aconselhavél para produção</b>
-
-<br>
-<h2> Setup backend </h2>
-<br>
-
-Dependências necessárias:
+Dependências:
 
 - node (nvm) - https://tecadmin.net/install-nodejs-with-nvm/
 - docker - https://docs.docker.com/engine/install/
@@ -33,30 +26,39 @@ Entre na pasta
 
 `cd /backend`
 
-Verifique se as variáveis ambientes do banco de dados estão preenchidas em <b>.env.development</b>
+Verifique se as variáveis ambientes do banco de dados estão preenchidas em <>.env.development</>
 
 Rode o comando para construir o ambiente
 
-` docker-compose up --file docker-compose.development.yml build`
+` docker-compose build`
 
 Em seguida
 
-` docker-compose up --file docker-compose.development.yml up`
+` docker-compose up`
 
-<br>
+Registre o usuário ADMIN para acesso as rotas privadas (Altere para os dados que deseja inserir).
 
-# Setup Frontend
+```
+{
+    "name": "admin",
+    "email": "seuemail@provedor.com",
+    "phone_number": "+552199999999",
+    "role": "ADMIN",
+    "password":"admin"
+}
+```
 
-## Dependências:
+## Setup frontend
+
+Dependências:
 
 - npm ou yarn
 - node (nvm) - https://tecadmin.net/install-nodejs-with-nvm/
 - angular https://angular.io/guide/setup-local
-
 - docker - https://docs.docker.com/engine/install/
 - docker-compose - https://docs.docker.com/compose/install/
 
-## Development server
+<h2>Development</h2>
 
 Entre na pasta:
 
@@ -70,7 +72,7 @@ Em seguida rode:
 
 `ng serve --open`
 
-## Production
+<h2>Production</h2>
 
 Entre na pasta:
 

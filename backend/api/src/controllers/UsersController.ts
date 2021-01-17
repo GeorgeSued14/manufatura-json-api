@@ -1,84 +1,110 @@
 import { Response, Request, NextFunction } from "express";
 import { User } from "../models/UsersModel";
-import { getManager } from "typeorm";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { getRepository } from "typeorm";
 
-import dotenv from "dotenv";
-dotenv.config();
-
-const SALT_ROUND = Number(process.env.BCRYPT_SALT_ROUND);
-const SECRET_KEY: any = process.env.SECRET_OR_KEY;
+import { validate } from "class-validator";
 
 export const index = async (req: Request, res: Response) => {
   res.json("REST WebAPI Challenge 20200630 Running").status(200);
 };
 
 export const getAll = async (req: Request, res: Response) => {
-  const userRepository = getManager().getRepository(User);
-  const users = await userRepository.find();
+  const userRepository = getRepository(User);
+  const users = await userRepository.find({
+    select: ["id", "email", "role"],
+  });
 
   return res.json(users).status(200);
 };
+export const getOneById = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id);
+  const userRepository = getRepository(User);
+  try {
+    const user = userRepository.findOneOrFail(id, {
+      select: ["id", "email", "role"],
+    });
+    res.json(user).status(200);
+  } catch (error) {
+    res.status(404).send("User not found");
+  }
+};
 
 export const register = async (req: Request, res: Response) => {
-  const { name, email, phone_number, password } = req.body;
+  const { name, email, phone_number, role, password } = req.body;
 
-  const userRepository = getManager().getRepository(User);
+  const userRepository = getRepository(User);
   const existingUser = await userRepository.findOne({ email });
 
   if (existingUser) {
     res.json({ message: "User already taken" }).status(400);
   } else {
-    const salt = await bcrypt.genSalt(SALT_ROUND);
-    const hashPassword = await bcrypt.hash(password, salt);
-
-    const user = await userRepository.create({
+    const user: User = userRepository.create({
       name: name,
       email: email,
       phone_number: phone_number,
-      password: hashPassword,
+      role: role,
+      password: password,
     });
 
-    await userRepository.save(user);
-
-    res.json("User created successfully").status(200);
-  }
-};
-
-export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
-  const userRepository = getManager().getRepository(User);
-
-  const user = await userRepository.findOne({
-    email,
-  });
-
-  if (!user) {
-    res.json({ message: "Invalid email or password" }).status(400);
-  } else {
-    const isPasswordSucess = await bcrypt.compare(
-      password,
-      user.password.toString()
-    );
-
-    if (isPasswordSucess) {
-      const payload = {
-        id: user.id,
-        name: user.name,
-      };
-
-      const token = jwt.sign(payload, SECRET_KEY, { expiresIn: 60 });
-
-      res.cookie("jwt", token, { secure: true, httpOnly: true });
-      res.json({ auth: true, token: token }).status(200);
-    } else {
-      res.json({ message: "Invalid email or password" }).status(400);
+    user.password = user.hashPassword();
+    console.log(user);
+    try {
+      await userRepository.save(user);
+    } catch (e) {
+      res.status(409).send("username already in use");
+      return;
     }
+
+    res.json("User created successfully").status(201);
   }
 };
 
-export const logout = async (req: Request, res: Response) => {
-  res.json({ auth: false, token: null });
+export const update = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const { email, role } = req.body;
+
+  const userRepository = getRepository(User);
+
+  let user: User;
+
+  try {
+    user = await userRepository.findOneOrFail(id);
+  } catch (error) {
+    res.status(404).send("User not found");
+    return;
+  }
+
+  user.email = email;
+  user.role = role;
+
+  const errors = await validate(user);
+  if (errors.length > 0) {
+    res.status(400).send(errors);
+    return;
+  }
+
+  try {
+    await userRepository.save(user);
+  } catch (e) {
+    res.status(409).send("username already in use");
+    return;
+  }
+  res.status(204).json(user);
+};
+
+export const remove = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const userRepository = getRepository(User);
+  let user: User;
+  try {
+    user = await userRepository.findOneOrFail(id);
+  } catch (error) {
+    res.status(404).send("User not found");
+    return;
+  }
+  userRepository.delete(id);
+
+  res.status(204).json(`User ${id} was deleted successfuly`);
 };
