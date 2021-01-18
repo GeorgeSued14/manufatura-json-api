@@ -5,13 +5,13 @@ import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 
 export const index = async (req: Request, res: Response) => {
-  res.json("REST WebAPI Challenge 20200630 Running").status(200);
+  res.json({ message: "REST WebAPI Challenge 20200630 Running" }).status(200);
 };
 
 export const getAll = async (req: Request, res: Response) => {
   const userRepository = getRepository(User);
   const users = await userRepository.find({
-    select: ["id", "email", "role"],
+    select: ["id", "name", "email"],
   });
 
   return res.json(users).status(200);

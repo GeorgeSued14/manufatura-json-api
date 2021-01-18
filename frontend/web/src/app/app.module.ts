@@ -1,43 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
-import { ProductsComponent } from './pages/products/products.component';
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
-import { MessagesComponent } from './pages/messages/messages.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ProductService } from './services/product/product.service';
-import { MessageService } from './services/message/message.service';
+import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppBarComponent } from './components/app-bar/app-bar.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { LoginComponent } from './pages/login/login.component';
-import { UploadComponent } from './pages/upload/upload.component';
+import { AlertComponent } from './_components/alert/alert.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProductsComponent,
-    ProductDetailComponent,
-    MessagesComponent,
-    DashboardComponent,
-    AppBarComponent,
-    RegisterComponent,
-    LoginComponent,
-    UploadComponent,
-  ],
   imports: [
-    MaterialModule,
     BrowserModule,
-    FormsModule,
-    AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    AppRoutingModule,
   ],
-  providers: [ProductService, MessageService],
+  declarations: [AppComponent, AlertComponent, HomeComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
