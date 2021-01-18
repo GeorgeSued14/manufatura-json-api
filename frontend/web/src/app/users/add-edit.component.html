@@ -1,0 +1,39 @@
+<h1 *ngIf="isAddMode">Add User</h1>
+<h1 *ngIf="!isAddMode">Edit User</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="name">First Name</label>
+      <input type="text" formControlName="name" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div *ngIf="f.name.errors.required">First Name is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label for="email">Last Name</label>
+      <input type="text" formControlName="email" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Last Name is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="phone_number">phone_number</label>
+      <input type="text" formControlName="phone_number" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }" />
+      <div *ngIf="submitted && f.phone_number.errors" class="invalid-feedback">
+        <div *ngIf="f.phone_number.errors.required">phone_number is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Save
+    </button>
+    <a routerLink="/users" class="btn btn-link">Cancel</a>
+  </div>
+</form>
