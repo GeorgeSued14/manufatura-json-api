@@ -1,4 +1,5 @@
-# fullstack-challenge-ddrtech
+# manufatura-json-api
+
 
 Interface Web e API criadas para fazer upload de dados JSON gerados por um sistema de manufatura e exibi-los em um dashboard.
 <br>
