@@ -9,11 +9,11 @@ Interface Web e API criadas para fazer upload de dados JSON gerados por um siste
 
 No terminal, clone o projeto:
 
-`https://github.com/GeorgeSued14/fullstack-challenge-ddrtech.git`
+`https://github.com/GeorgeSued14/manufatura-json-api.git`
 
 Entre na pasta
 
-`cd /fullstack-challenge-ddrtech`
+`cd /backend`
 
 ## Setup backend
 
